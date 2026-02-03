@@ -1,0 +1,22 @@
+# Core dependencies
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+pydantic>=2.8.0
+python-dotenv>=1.0.0
+
+# Pipecat and voice
+pipecat-ai[daily,deepgram]>=0.0.100
+
+# Additional for logging
+loguru>=0.7.0
+
+# LLM and observability
+anthropic>=0.39.0
+weave>=0.51.0
+
+# Storage
+redis>=5.0.0
+
+# Utilities
+httpx>=0.27.0
+python-multipart>=0.0.6
