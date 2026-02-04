@@ -1,0 +1,89 @@
+FORGE - ARCHITECTURE TALKING POINTS
+====================================
+
+QUICK PITCH (30 seconds)
+------------------------
+Forge is an AI interview coach that learns YOUR weaknesses. You have a voice conversation with the AI - no typing. It uses Claude to score your answers in real-time, builds a knowledge map of where you're weak, and adapts future questions to target those gaps. The more you practice, the smarter it gets about what YOU need to work on.
+
+
+THE DATA FLOW (How it works)
+----------------------------
+User speaks → Audio captured by Daily → Deepgram transcribes to text → My bot logic processes it → Claude evaluates the answer → Bot generates response → Deepgram converts to speech → User hears the response
+
+
+COMPONENT BY COMPONENT
+----------------------
+
+1. FRONTEND (Next.js 14)
+   - Built with React and Next.js App Router
+   - Three main screens: Landing page, Voice session, Progress dashboard
+   - Connects to Daily for real-time audio
+
+2. DAILY (WebRTC)
+   - Handles all the real-time audio streaming
+   - Creates a "room" that both the user and bot join
+   - Production-grade infrastructure - same tech used by Clubhouse
+   - Handles network complexity like NAT traversal automatically
+
+3. PIPECAT (Voice Pipeline)
+   - Python framework that orchestrates the whole voice flow
+   - Connects: Audio In → Speech-to-Text → My Logic → Text-to-Speech → Audio Out
+   - Like LEGO blocks - I snap together components
+   - Makes building voice AI apps way easier
+
+4. DEEPGRAM (Speech Services)
+   - Nova-2 model for speech-to-text - sub-300ms latency
+   - Aura model for text-to-speech - natural sounding voice
+   - Detects when user stops talking (utterance detection)
+   - Real-time transcription as user speaks
+
+5. CLAUDE (The Brain)
+   - Evaluates every answer on a 0-10 scale
+   - Looks at: completeness, STAR method, technical accuracy, examples, clarity
+   - Identifies specific weak points in each answer
+   - Generates the NEXT question based on weak areas
+   - Doesn't ask random questions - targets where you struggle
+
+6. REDIS (Storage)
+   - Stores session data and user progress
+   - Knowledge maps: scores per topic over time
+   - Sub-millisecond reads/writes for real-time performance
+
+7. WEAVE (Observability)
+   - Just 2 lines of code to add
+   - Logs every Claude API call automatically
+   - Shows prompts, responses, token usage, latency
+   - I can debug exactly WHY Claude gave a certain score
+
+
+THE SELF-IMPROVING LOOP
+-----------------------
+1. Ask a question across a topic (leadership, algorithms, etc.)
+2. User answers out loud
+3. Claude scores the answer and identifies weak points
+4. Score gets added to the user's "knowledge map"
+5. When picking the next question, I look at the knowledge map
+6. I prioritize topics with LOW scores
+7. As user improves, difficulty increases
+8. Repeat - the system keeps targeting weak spots
+
+
+TECH STACK SUMMARY
+------------------
+Frontend: Next.js 14, React, Tailwind
+Voice Transport: Daily (WebRTC)
+Voice Pipeline: Pipecat
+Speech-to-Text: Deepgram Nova-2
+Text-to-Speech: Deepgram Aura
+AI Evaluation: Claude (Anthropic)
+Storage: Redis
+Observability: Weave (Weights & Biases)
+
+
+KEY DIFFERENTIATORS
+-------------------
+- Voice-first: No typing, feels like a real interview
+- Adaptive: Learns YOUR weak spots, not generic practice
+- Observable: Full transparency into AI decisions
+- Real-time: Instant feedback after each answer
+- Progress tracking: See improvement over time with charts

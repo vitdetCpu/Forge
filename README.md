@@ -1,247 +1,232 @@
-# Forge
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js" />
+  <img src="https://img.shields.io/badge/Python-3.10+-blue?style=for-the-badge&logo=python&logoColor=white" />
+  <img src="https://img.shields.io/badge/Claude-AI-purple?style=for-the-badge&logo=anthropic" />
+  <img src="https://img.shields.io/badge/Voice-Enabled-green?style=for-the-badge&logo=microphone" />
+</p>
 
-**Forge your interview skills with AI that learns and adapts.**
+# 🔥 Forge
 
-A voice-based mock interviewer that identifies your weaknesses and focuses practice where you need it most. Every session makes you sharper.
+**AI-powered voice interview coach that learns and adapts to you.**
 
-## Features
+Forge is an intelligent mock interviewer that uses real-time voice conversations to identify your weaknesses and progressively focuses practice where you need it most. Every session makes you sharper.
 
-- 🎤 **Voice-based interviews** using Daily + Pipecat
-- 🧠 **Self-improving** - learns your weak areas and focuses practice there
-- 📊 **Visual progress tracking** with radar charts and improvement graphs
-- 🔍 **Full observability** with Weave (W&B) - see every AI decision
-- ⚡ **Fast storage** with Redis
+> 🏆 Built for [WeaveHacks 2025](https://weavehacks.dev)
 
-## Tech Stack
+---
 
-- **Frontend**: Next.js 14 (React) on Vercel
-- **Backend**: Python with Pipecat framework
-- **Voice**: Daily (WebRTC infrastructure)
-- **AI**: Claude API (Anthropic)
-- **Storage**: Redis
-- **Observability**: Weave (Weights & Biases)
+## ✨ Key Features
 
-## Project Structure
+| Feature | Description |
+|---------|-------------|
+| 🎤 **Voice Conversations** | Natural back-and-forth interviews using WebRTC—no typing required |
+| 🧠 **Adaptive Learning** | AI identifies your weak areas and dynamically adjusts question difficulty |
+| 📊 **Progress Tracking** | Radar charts and improvement graphs to visualize your growth |
+| ⚡ **Real-Time Feedback** | Instant scoring and constructive feedback after each answer |
+| 🔍 **Full Observability** | Every AI decision logged with Weave for complete transparency |
+
+---
+
+## 🏗️ Architecture
 
 ```
-interview-prep-agent/
-├── frontend/          # Next.js web app
-│   ├── app/          # Next.js 14 app router
-│   ├── components/   # React components
-│   └── lib/          # API clients
-└── backend/          # Python Pipecat bot
-    ├── main.py       # Entry point
-    ├── bot.py        # Pipecat voice bot
-    ├── evaluator.py  # Claude API integration
-    └── storage.py    # Redis operations
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                  FRONTEND                                   │
+│                             (Next.js 14 + React)                            │
+│  ┌─────────────┐  ┌─────────────────────┐  ┌────────────────────────────┐   │
+│  │   Landing   │  │  Voice Session UI   │  │   Progress Dashboard     │   │
+│  │    Page     │  │  (Daily WebRTC)     │  │   (Radar + Line Charts)  │   │
+│  └─────────────┘  └─────────────────────┘  └────────────────────────────┘   │
+└────────────────────────────────┬────────────────────────────────────────────┘
+                                 │ REST API + WebRTC
+                                 ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                  BACKEND                                    │
+│                           (Python + FastAPI)                                │
+│                                                                             │
+│  ┌──────────────────────────────────────────────────────────────────────┐   │
+│  │                        PIPECAT VOICE PIPELINE                        │   │
+│  │  ┌────────────┐    ┌─────────────┐    ┌────────────┐    ┌─────────┐  │   │
+│  │  │   Daily    │───▶│  Deepgram   │───▶│  Interview │───▶│ Deepgram│  │   │
+│  │  │ Transport  │    │    STT      │    │ Bot Logic  │    │   TTS   │  │   │
+│  │  │  (WebRTC)  │◀───│ (nova-2)    │◀───│            │◀───│         │  │   │
+│  │  └────────────┘    └─────────────┘    └─────┬──────┘    └─────────┘  │   │
+│  └─────────────────────────────────────────────┼────────────────────────┘   │
+│                                                │                            │
+│  ┌─────────────────────┐    ┌─────────────────┴────────────────────────┐   │
+│  │   Session Storage   │◀──▶│           Claude Evaluator               │   │
+│  │      (Redis)        │    │  • Answer scoring (0-10)                 │   │
+│  │                     │    │  • Weakness identification               │   │
+│  │  • Knowledge maps   │    │  • Adaptive question generation          │   │
+│  │  • Session history  │    │  • Topic selection based on weak areas   │   │
+│  │  • Score tracking   │    └──────────────────────────────────────────┘   │
+│  └─────────────────────┘                       │                            │
+│                                                ▼                            │
+│                               ┌───────────────────────────┐                 │
+│                               │   Weave Observability     │                 │
+│                               │   (W&B LLM Tracing)       │                 │
+│                               └───────────────────────────┘                 │
+└─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-## Setup Instructions
+---
+
+## 🧠 How the AI Learns
+
+Forge uses a **self-improving feedback loop** to personalize your practice:
+
+```
+   ┌─────────────────────────────────────────────────────────┐
+   │                                                         │
+   ▼                                                         │
+┌──────────┐     ┌──────────┐     ┌───────────┐     ┌───────┴───────┐
+│  1. ASK  │────▶│ 2. LISTEN│────▶│ 3. SCORE  │────▶│ 4. ADAPT      │
+│ Question │     │ & Record │     │ with Claude│     │ Next Question │
+└──────────┘     └──────────┘     └───────────┘     └───────────────┘
+                                        │
+                                        ▼
+                               ┌──────────────────┐
+                               │  Knowledge Map   │
+                               │  ─────────────   │
+                               │  Leadership: 72% │
+                               │  Algorithms: 45% │◀── Focus Here!
+                               │  System Design: 68%│
+                               │  Communication: 81%│
+                               └──────────────────┘
+```
+
+1. **Initial Assessment** — Asks questions across multiple categories
+2. **Real-Time Scoring** — Claude evaluates each answer (0-10) based on STAR method, specificity, and clarity
+3. **Knowledge Mapping** — Tracks your performance per topic over time
+4. **Adaptive Questioning** — Prioritizes your weakest areas with progressive difficulty
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology | Purpose |
+|-------|------------|---------|
+| **Frontend** | Next.js 14, React, TailwindCSS | Modern web UI with App Router |
+| **Voice Transport** | Daily (WebRTC) | Production-grade real-time audio |
+| **Voice Pipeline** | Pipecat | Orchestrates STT → Bot → TTS flow |
+| **Speech-to-Text** | Deepgram Nova-2 | Fast, accurate transcription |
+| **Text-to-Speech** | Deepgram Aura | Natural-sounding voice responses |
+| **AI Evaluation** | Claude (Anthropic) | Answer scoring & question generation |
+| **Storage** | Redis | Session state & knowledge maps |
+| **Observability** | Weave (W&B) | LLM call tracing & debugging |
+
+---
+
+## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js 18+ and npm
+- Node.js 18+
 - Python 3.10+
-- Redis running locally or cloud instance
-- API Keys:
-  - Anthropic API key
-  - Daily API key
-  - Deepgram API key (for speech-to-text)
-  - ElevenLabs API key (for text-to-speech)
+- Redis (local or cloud)
+- API Keys: Anthropic, Daily, Deepgram
 
-### Frontend Setup
+### 1. Clone & Setup
 
 ```bash
-cd frontend
-npm install
-cp .env.example .env.local
-# Edit .env.local with your backend URL
-npm run dev
-# Runs on http://localhost:3000
-```
+git clone https://github.com/vitdetCpu/Forge.git
+cd Forge
 
-### Backend Setup
-
-```bash
+# Backend
 cd backend
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env
-# Edit .env with your API keys
-python main.py
-# Runs on http://localhost:8000
+cp .env.example .env  # Add your API keys
+
+# Frontend
+cd ../frontend
+npm install
 ```
 
-### Redis Setup
+### 2. Configure Environment
 
-**Local (easiest for development):**
-```bash
-# macOS
-brew install redis
-brew services start redis
-
-# Ubuntu/Debian
-sudo apt-get install redis-server
-sudo systemctl start redis
-
-# Or use Docker
-docker run -d -p 6379:6379 redis:latest
-```
-
-**Cloud (for production):**
-- Use Redis Cloud (free tier available)
-- Update REDIS_URL in backend/.env
-
-## Environment Variables
-
-### Frontend (.env.local)
-
-```
-NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
-```
-
-### Backend (.env)
-
-```
+**Backend `.env`:**
+```env
 ANTHROPIC_API_KEY=sk-ant-...
 DAILY_API_KEY=...
 DEEPGRAM_API_KEY=...
-ELEVENLABS_API_KEY=...
 REDIS_URL=redis://localhost:6379
-WEAVE_PROJECT=interview-prep-agent
+WEAVE_PROJECT=forge
 ```
 
-## Running the App
+**Frontend `.env.local`:**
+```env
+NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
+```
 
-1. Start Redis (if running locally)
-2. Start backend: `cd backend && python main.py`
-3. Start frontend: `cd frontend && npm run dev`
-4. Open http://localhost:3000
-
-## Demo Flow
-
-1. Click "Start Interview Session"
-2. Allow microphone access
-3. Voice bot asks you questions
-4. Answer naturally (speak out loud)
-5. Bot evaluates your answer in real-time
-6. After session, view dashboard showing improvement
-
-## Key Features for Judges
-
-### Self-Improving Mechanism
-
-The agent learns your weak areas through:
-
-1. **Initial Assessment**: Asks questions across multiple topics
-2. **Scoring**: Claude evaluates each answer (0-10 scale)
-3. **Knowledge Mapping**: Tracks scores per topic area
-4. **Adaptive Questioning**: Focuses on low-scoring areas
-5. **Progressive Difficulty**: Increases difficulty as you improve
-
-### Observability with Weave
-
-Every Claude API call is logged:
-- Question generation prompts
-- Answer evaluation logic
-- Scoring decisions
-- Token usage and latency
-
-View traces at: https://wandb.ai/weave
-
-### Tech Highlights
-
-- **Pipecat**: Seamless voice conversation flow
-- **Daily**: Production-ready voice infrastructure
-- **Redis**: Fast session storage and caching
-- **Weave**: Complete LLM observability (2 lines of code!)
-
-## Deployment
-
-### Frontend (Vercel)
+### 3. Run
 
 ```bash
-cd frontend
-vercel
-# Follow prompts, add environment variables
+# Terminal 1: Backend
+cd backend && python main.py
+
+# Terminal 2: Frontend
+cd frontend && npm run dev
 ```
 
-### Backend (Options)
+Open [http://localhost:3000](http://localhost:3000) and start practicing! 🎤
 
-**Option 1: Render/Railway**
-- Connect GitHub repo
-- Set environment variables
-- Auto-deploys
+---
 
-**Option 2: Google Cloud Run**
-- Containerize with provided Dockerfile
-- Deploy to Cloud Run
+## 📁 Project Structure
 
-**Option 3: ngrok (for demo)**
-```bash
-cd backend
-python main.py
-# In another terminal:
-ngrok http 8000
-# Use ngrok URL as NEXT_PUBLIC_BACKEND_URL
+```
+forge/
+├── frontend/                 # Next.js 14 web application
+│   ├── app/                  # App Router pages
+│   │   ├── page.tsx          # Landing page
+│   │   ├── session/          # Voice interview UI
+│   │   └── dashboard/        # Progress visualization
+│   ├── components/           # React components
+│   │   ├── RadarChart.tsx    # Knowledge visualization
+│   │   └── ProgressChart.tsx # Improvement tracking
+│   └── lib/api.ts            # Backend API client
+│
+├── backend/                  # Python FastAPI server
+│   ├── main.py               # API endpoints
+│   ├── pipecat_bot.py        # Voice pipeline & interview logic
+│   ├── evaluator.py          # Claude integration + Weave tracing
+│   ├── storage.py            # Redis operations
+│   └── question_bank.py      # Question templates
+│
+└── README.md
 ```
 
-## Development Notes
+---
 
-### Adding New Question Topics
+## 🎯 Demo Flow
 
-Edit `backend/question_bank.py`:
+1. **Click "Start Interview Session"** on the landing page
+2. **Allow microphone access** when prompted
+3. **Listen** — The AI interviewer introduces itself and asks the first question
+4. **Speak naturally** — Answer out loud like a real interview
+5. **Get instant feedback** — Bot evaluates and moves to the next question
+6. **View your dashboard** — See scores per topic and track improvement over time
 
-```python
-QUESTIONS = {
-    "new_topic": [
-        "Question 1",
-        "Question 2",
-        # Add more questions
-    ]
-}
-```
+---
 
-### Adjusting Scoring Logic
+## 🔮 Future Roadmap
 
-Edit `backend/evaluator.py`:
+- [ ] **Interview types** — Technical, behavioral, case study modes
+- [ ] **Resume analysis** — Personalized questions based on your experience
+- [ ] **Video recording** — Review body language and delivery
+- [ ] **Peer comparison** — Anonymous benchmarking against other users
+- [ ] **Custom question banks** — Upload your target company's style
 
-```python
-def evaluate_answer(question, answer, topic):
-    # Customize Claude prompt for evaluation
-    # Adjust scoring criteria
-    pass
-```
+---
 
-### Customizing UI
+## 👨‍💻 Author
 
-Edit components in `frontend/components/`:
-- `RadarChart.tsx` - Knowledge visualization
-- `SessionView.tsx` - Interview interface
-- `Dashboard.tsx` - Progress tracking
+Built with ☕ and 🔥 by **Melon** for WeaveHacks 2025
 
-## Troubleshooting
+---
 
-**Voice not working?**
-- Check microphone permissions in browser
-- Verify Daily API key is correct
-- Check browser console for WebRTC errors
+## 📄 License
 
-**Backend crashes?**
-- Ensure all API keys are set
-- Check Redis is running
-- Verify Python dependencies installed
-
-**Session not saving?**
-- Check Redis connection
-- Verify REDIS_URL environment variable
-- Check backend logs for errors
-
-## Credits
-
-Built for WeaveHacks 2025 by Melon
-
-## License
-
-MIT
+MIT License — see [LICENSE](LICENSE) for details.

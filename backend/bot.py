@@ -11,14 +11,16 @@ import threading
 
 from question_bank import get_question, get_all_topics
 
-# For Daily room creation
-DAILY_API_KEY = os.getenv("DAILY_API_KEY")
-DAILY_API_URL = os.getenv("DAILY_API_URL", "https://api.daily.co/v1")
+# For Daily room creation - loaded lazily to ensure .env is loaded first
+DAILY_API_URL = "https://api.daily.co/v1"
 
 def create_daily_room(session_id: str) -> dict:
     """Create a Daily room for the interview session"""
     
-    if not DAILY_API_KEY:
+    # Load API key at runtime (after load_dotenv has been called in main.py)
+    daily_api_key = os.getenv("DAILY_API_KEY")
+    
+    if not daily_api_key:
         print("⚠️  No Daily API key - using demo URL")
         return {
             "url": f"https://demo.daily.co/interview-{session_id}",
@@ -29,7 +31,7 @@ def create_daily_room(session_id: str) -> dict:
         response = httpx.post(
             f"{DAILY_API_URL}/rooms",
             headers={
-                "Authorization": f"Bearer {DAILY_API_KEY}",
+                "Authorization": f"Bearer {daily_api_key}",
                 "Content-Type": "application/json"
             },
             json={
@@ -57,7 +59,7 @@ def create_daily_room(session_id: str) -> dict:
             token_response = httpx.post(
                 f"{DAILY_API_URL}/meeting-tokens",
                 headers={
-                    "Authorization": f"Bearer {DAILY_API_KEY}",
+                    "Authorization": f"Bearer {daily_api_key}",
                     "Content-Type": "application/json"
                 },
                 json={
