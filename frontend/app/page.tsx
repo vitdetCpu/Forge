@@ -116,7 +116,7 @@ export default function Home() {
 
         {/* Footer */}
         <div className="text-center mt-12 text-gray-500 text-sm">
-          <p>Built for WeaveHacks 2025 | Powered by Daily, Pipecat, Claude, Redis & Weave</p>
+          <p>Built for WeaveHacks 2026 | Powered by Daily, Pipecat, Claude, Redis & Weave</p>
         </div>
       </div>
     </main>

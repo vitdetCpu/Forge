@@ -11,7 +11,7 @@
 
 Forge is an intelligent mock interviewer that uses real-time voice conversations to identify your weaknesses and progressively focuses practice where you need it most. Every session makes you sharper.
 
-> 🏆 Built for [WeaveHacks 2025](https://weavehacks.dev)
+> 🏆 Built for [WeaveHacks 2026](https://weavehacks.dev)
 
 ---
 
@@ -85,14 +85,14 @@ Forge uses a **self-improving feedback loop** to personalize your practice:
 └──────────┘     └──────────┘     └───────────┘     └───────────────┘
                                         │
                                         ▼
-                               ┌──────────────────┐
-                               │  Knowledge Map   │
-                               │  ─────────────   │
-                               │  Leadership: 72% │
-                               │  Algorithms: 45% │◀── Focus Here!
-                               │  System Design: 68%│
-                               │  Communication: 81%│
-                               └──────────────────┘
+                                ┌──────────────────┐
+                                │  Knowledge Map   │
+                                │  ─────────────   │
+                                │  Leadership: 72% │
+                                │  Algorithms: 45% │◀── Focus Here!
+                                │  System Design: 68%│
+                                │  Communication: 81%│
+                                └──────────────────┘
 ```
 
 1. **Initial Assessment** — Asks questions across multiple categories
@@ -137,11 +137,12 @@ cd backend
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-cp .env.example .env  # Add your API keys
+cp .env.example .env  # Add your API keys from the email/dashboard
 
 # Frontend
 cd ../frontend
 npm install
+cp .env.example .env.local
 ```
 
 ### 2. Configure Environment
@@ -163,11 +164,13 @@ NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
 ### 3. Run
 
 ```bash
-# Terminal 1: Backend
-cd backend && python main.py
+# Terminal 1: Backend (using the helper script)
+cd backend
+./run.sh
 
 # Terminal 2: Frontend
-cd frontend && npm run dev
+cd frontend
+npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) and start practicing! 🎤
@@ -223,7 +226,7 @@ forge/
 
 ## 👨‍💻 Author
 
-Built with ☕ and 🔥 by **Melon** for WeaveHacks 2025
+Built with ☕ and 🔥 by **Melon** for WeaveHacks 2026
 
 ---
 
