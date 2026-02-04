@@ -46,7 +46,7 @@ Be constructive and specific."""
 
         try:
             response = self.client.messages.create(
-                model="claude-sonnet-4-20250514",
+                model="claude-3-5-sonnet-20241022",
                 max_tokens=1000,
                 messages=[{"role": "user", "content": prompt}]
             )
@@ -100,7 +100,7 @@ Provide ONLY the question, no additional commentary."""
 
         try:
             response = self.client.messages.create(
-                model="claude-sonnet-4-20250514",
+                model="claude-3-5-sonnet-20241022",
                 max_tokens=500,
                 messages=[{"role": "user", "content": prompt}]
             )
