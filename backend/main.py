@@ -15,8 +15,8 @@ from bot import create_daily_room
 from evaluator import InterviewEvaluator
 import threading
 
-# Load environment variables FIRST
-load_dotenv()
+# Load environment variables FIRST (force override to ignore stale shell vars)
+load_dotenv(override=True)
 
 # Check if voice is configured AFTER loading env
 VOICE_ENABLED = bool(os.getenv("DEEPGRAM_API_KEY")) and bool(os.getenv("DAILY_API_KEY"))
