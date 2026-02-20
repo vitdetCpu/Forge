@@ -226,7 +226,7 @@ forge/
 
 ## 👨‍💻 Authors
 
-Built with ☕ and ❤️ by **Vidit and Nathan** for WeaveHacks 2026
+Built with ☕ and ❤️ by **Vidit and Nathan**
 
 ---
 
