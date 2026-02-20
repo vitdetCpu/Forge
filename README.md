@@ -11,7 +11,7 @@
 
 Forge is an intelligent mock interviewer that uses real-time voice conversations to identify your weaknesses and progressively focuses practice where you need it most. Every session makes you sharper.
 
-> 🏆 Built for [WeaveHacks 2026](https://weavehacks.dev)
+> 🏆 Built for CoreWeave's Weights & Biases / WeaveHacks 2026
 
 ---
 
